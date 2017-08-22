@@ -76,12 +76,11 @@ public class SampleSCBuild {
 	}
 
 	public static String readContentFrom(String textFileName) throws IOException {
-		//BufferedReader bufferedTextFileReader = new BufferedReader(new FileReader(textFileName));
-		BufferedReader bufferedTextFileReader = new BufferedReader(new InputStreamReader(new FileInputStream(textFileName),"UTF8"));
+		BufferedReader bufferedTextFileReader = new BufferedReader(new FileReader(textFileName));
 		StringBuilder contentReceiver = new StringBuilder();
-		char[] buf = new char[4096];  
-		while (bufferedTextFileReader.read(buf) > 0) {
-		    contentReceiver.append(buf);
+		String ss;
+		while ((ss = bufferedTextFileReader.readLine()) != null) {
+		    contentReceiver.append(ss+"\n");
 		} 
 	 
 		return contentReceiver.toString();
@@ -91,6 +90,7 @@ public class SampleSCBuild {
 	public static void sampleDefineContract(CoinStackClient client)
 			throws IOException, CoinStackException {
 
+/*
         String POINT_FUNC = "";
         {
                 POINT_FUNC += "local system = require(\"system\")\n";
@@ -104,16 +104,17 @@ public class SampleSCBuild {
                 POINT_FUNC += "\tsystem.setItem(msg, point)\n";
                 POINT_FUNC += "end\n\n";
 	}
-		//String Code = readContentFrom("./def.lua");
+*/
+		String Code = readContentFrom("./def.lua");
 		LuaContractBuilder lcBuilder = new LuaContractBuilder();
 		lcBuilder.setContractId(ContractAddress);
-		lcBuilder.setDefinition(POINT_FUNC.getBytes());
+		lcBuilder.setDefinition(Code.getBytes("UTF-8"));
 
                 String rawTx = lcBuilder.buildTransaction(client, ContractPk);
                 String txHash = TransactionUtil.getTransactionHash(rawTx);
 
                 System.out.println("- Func Def tx: "+txHash);
-                System.out.println("-          code:"+POINT_FUNC);
+                System.out.println("-          code:"+Code);
                 client.sendTransaction(rawTx);
                 sleep(1000 * 10);
                 System.out.println("- Func Def finised -");
@@ -123,41 +124,54 @@ public class SampleSCBuild {
 	public static void sampleExecContract(CoinStackClient client)
 			throws IOException, CoinStackException {
 
+		String Code = readContentFrom("./test2.lua");
                 LuaContractBuilder lcBuilder = new LuaContractBuilder();
                 lcBuilder.setContractId(ContractAddress);
-                String code = "res, ok = call(\"genPoint\", \"ABC\", 12000000000); assert(ok, res)";
-                //String code = "call(\"genPoint\", \"ABC\", \"12000000000\")";
-                //String code = "res, ok = call(\"registStore\", \"ABC\", \"DEF\"); assert(ok, res)";
-                //String code = String.format("call(\"lookupPoint\", \"ABC\")");
+                //String code = "res, ok = call(\"genPoint\", \"ABC\", 12000000000); assert(ok, res)";
                 lcBuilder.setFee(1000000);
-                lcBuilder.setExecution(code.getBytes());
+                lcBuilder.setExecution(Code.getBytes());
 
                 String rawTx = lcBuilder.buildTransaction(client, ContractPk);
                 String txHash = TransactionUtil.getTransactionHash(rawTx);
                 client.sendTransaction(rawTx);
-                sleep(1000 * 10);
+                sleep(1000 * 20);
                 System.out.println("- Func Exec finised -");
         }
 
 	public static void sampleQueryContract(CoinStackClient client)
 			throws IOException, CoinStackException {
-                String code = String.format("res, ok = call(\"lookupPoint\", \"ABC\"); return res");
+                String code = String.format("res, ok = call(\"lookupPoint\", \"Customer1\"); return res");
                 String pointstr = null;
 
                 ContractResult res = client.queryContract(
                                 ContractAddress, ContractBody.TYPE_LSC, code.getBytes());
                 if (res == null) {
-
                         System.out.println("  res: is null");
-
                         return;
                 }
 
-		System.out.println(res.asJson());
-                try {
-                        pointstr = res.asJson().getString("result");
-                } catch (Exception e) {
+		System.out.println("Customer1: " +res.asJson());
+
+		code = String.format("res, ok = call(\"lookupPoint\", \"Store1\"); return res");
+
+                res = client.queryContract(
+                                ContractAddress, ContractBody.TYPE_LSC, code.getBytes());
+                if (res == null) {
+                        System.out.println("  res: is null");
                         return;
                 }
+
+		System.out.println("Store1: " +res.asJson());
+
+ 		code = String.format("res, ok = call(\"lookupPoint\", \"Bank1\"); return res");
+
+                res = client.queryContract(
+                                ContractAddress, ContractBody.TYPE_LSC, code.getBytes());
+                if (res == null) {
+                        System.out.println("  res: is null");
+                        return;
+                }
+
+		System.out.println("Bank1: " +res.asJson());
 	}
 }

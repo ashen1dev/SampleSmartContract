@@ -1,7 +1,3 @@
-local system = require("system");
-
-system.nextBlock()
-
 ret, ok = call("registBCpoint", 1200000)
 assert(ok, ret)
 
@@ -23,12 +19,11 @@ assert(ok, ret)
 ret, ok = call("registStore", "Store1", "Bank1")
 assert(ok, ret)
 
-system.print("here")
 a = 0
 cs = 90000
-while a < 1000 do
+while a < 100 do
 	ret, ok = call("sendPointCustomerTotal", "Customer1", "Store1", cs)
---system.print("  " .. a .. " :     " .. call("lookupPoint", "Customer1") .. " : " .. call("lookupPoint", "Store1") .. " : " ..  call("lookupPoint", "Bank1"))
+	assert(ok, ret)
 	a = a+1
 end
 
