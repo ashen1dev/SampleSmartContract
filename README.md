@@ -22,8 +22,10 @@ DB와 같은 lock scheme을 제공하지 않으므로 외부 프로그램에서 
 
 ----------------------------
 수행 방법
-1. ./install.sh
-2. ./run.sh
+1. coinstack설치 (node.ini 활용), 또는 src에서 testcoin으로 변경
+2. 특정 address에 coin충전(수수료)
+3. ./install.sh
+4. ./run.sh
 
 ----------------------------
 가상 환경 수행 방법
