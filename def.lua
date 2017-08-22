@@ -1,14 +1,16 @@
-local system = require("system");
-
 -- function definition
 -- simple payment system
-function lookupPoint(msg)
-        local res = system.getItem(msg)
-        return res
-end
+local system = require("system")
 
 function genPoint(msg, point)
+	system.print("GENPOINT====")
         system.setItem(msg, point)
+end
+
+function lookupPoint(msg)
+	system.print("lookuppoint====")
+        local res = system.getItem(msg)
+        return res
 end
 
 function bulkgenPoint(msg, point)
