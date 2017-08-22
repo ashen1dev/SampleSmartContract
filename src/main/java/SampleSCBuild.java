@@ -22,7 +22,6 @@ public class SampleSCBuild {
         //public static String SAMPLE_PRIVKEY = "L49dVtBG7emznSTgezCrKdRxj6kX8EGMGx5ACSg3NNBrit7r2Bi4";
 
         public static CoinStackClient createNewClient() {
-                // Client 객체 생성
                 CredentialsProvider credentials = null;
                 AbstractEndpoint endpoint = new AbstractEndpoint() {
                         @Override
