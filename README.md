@@ -31,3 +31,11 @@ DB와 같은 lock scheme을 제공하지 않으므로 외부 프로그램에서 
 가상 환경 수행 방법
 1. ./test.sh
 
+----------------------------
+testchain test address
+- import wallet을 하여 key를 집어넣는다.
+address:"1HceJnZSHpMAK887fRCtVNSCkpgcfXhasc","key":  L1bzrnAAtiaQ6MjCBsE9FvXhreC2GXcLyaYu2ahgxKEyuW2XdPAk  ,"alias":"test1"
+address:"1LoZda4HYihnmjE1SmSsA1zjiQqiijtdiF","key":  L4fZn9Bx2M77gAS2VrS8NcRJfq82W8oeJCbgxvxoBdKFn7zXna4J  ,"alias":"test2"
+address:"13VU3oPoMX5qRxFrPmEmpAeX3E3BqAvq2Y","key":  KzuYi1BN83wDEBf4KZeD41E34sxpxMsksPsT3xpAYNiDEGMYYNrj  ,"alias":"test3"
+address:"1P4tfKEeucy8b5ntaHAscfciQGpdm4BdU6","key":  L2poeTXSbB3HiErp6aWW1qhDPzLnsxPs2LwargL82PmepPpDfKT3  ,"alias":"test4"
+address:"1NHgQgdhtPoWJuk6mNHfhDWcKssnA9puof","key":  L5mAPYnhZLwe6TDE6dsTYHsCFkn6kHJeBRdXrYeSvy7r95FmVvSt  ,"alias":"test5"
