@@ -18,15 +18,18 @@ public class SampleSCBuild {
 	public static String ContractPk = null;
 	public static String ContractAddress = null;
 	
+	// local
         public static String SAMPLE_PRIVKEY = "KwjFub6oV3xmjz9PNwXVPhD5WxKEbuX5YajPXwn4FRzZAbyEjUbh";
+
+	// TESTCHAIN: test chain - coin already charged 
         //public static String SAMPLE_PRIVKEY = "L49dVtBG7emznSTgezCrKdRxj6kX8EGMGx5ACSg3NNBrit7r2Bi4";
 
         public static CoinStackClient createNewClient() {
-                // Client 객체 생성
                 CredentialsProvider credentials = null;
                 AbstractEndpoint endpoint = new AbstractEndpoint() {
                         @Override
                         public String endpoint() {
+				// TESTCHAIN:
                                 //return "http://testchain.blocko.io";
                                 return "http://localhost:3000";
                         }
@@ -51,6 +54,7 @@ public class SampleSCBuild {
 		
                 try {
                         ContractAddress = ECKey.deriveAddress(ContractPk);
+			// TESTCHAIN: test chain - coin aleady charged
                         //ContractAddress = "1Ge4nk2hoevspGUbLUUQEWQ25L45voMfR7";
                 } catch (Exception e) {
                         System.err.println("Fail to dereive Address" +ContractPk);
@@ -89,22 +93,6 @@ public class SampleSCBuild {
 
 	public static void sampleDefineContract(CoinStackClient client)
 			throws IOException, CoinStackException {
-
-/*
-        String POINT_FUNC = "";
-        {
-                POINT_FUNC += "local system = require(\"system\")\n";
-                POINT_FUNC += "function lookupPoint(msg)\n";
-                POINT_FUNC += "\tsystem.print(\"LOOKUPPOINT: \" .. msg)\n";
-                POINT_FUNC += "\tlocal res = system.getItem(msg)\n";
-                POINT_FUNC += "\treturn res\n";
-                POINT_FUNC += "end\n\n";
-                POINT_FUNC += "function genPoint(msg, point)\n";
-                POINT_FUNC += "\tsystem.print(\"GENPOINT: \" .. msg .. \" sends \" .. point)\n";
-                POINT_FUNC += "\tsystem.setItem(msg, point)\n";
-                POINT_FUNC += "end\n\n";
-	}
-*/
 		String Code = readContentFrom("./def.lua");
 		LuaContractBuilder lcBuilder = new LuaContractBuilder();
 		lcBuilder.setContractId(ContractAddress);
@@ -127,7 +115,6 @@ public class SampleSCBuild {
 		String Code = readContentFrom("./test2.lua");
                 LuaContractBuilder lcBuilder = new LuaContractBuilder();
                 lcBuilder.setContractId(ContractAddress);
-                //String code = "res, ok = call(\"genPoint\", \"ABC\", 12000000000); assert(ok, res)";
                 lcBuilder.setFee(1000000);
                 lcBuilder.setExecution(Code.getBytes());
 
