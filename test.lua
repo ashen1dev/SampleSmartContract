@@ -32,3 +32,9 @@ while a < 200 do
 	a = a+1
 end
 
+ret, ok = call("recall", "Customer1", "Store1")
+assert(ok, ret)
+
+system.print(call("lookupPoint", "Customer1"))
+system.print(call("lookupPoint", "Store1"))
+system.print(call("lookupPoint", "Bank1"))

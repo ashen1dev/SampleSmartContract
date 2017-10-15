@@ -88,3 +88,13 @@ function sendPointCustomerTotal(ckey, skey, cspoint)
         end
 end
 
+function recall(ckey, skey)
+        local cpoint = system.getItem(ckey)
+        local spoint = system.getItem(skey)
+        local bkey = getBank(skey)
+        local bpoint = system.getItem(bkey)
+        
+        system.setItem(ckey, 0)
+        system.setItem(skey, 0)
+        system.setItem(bkey, bpoint + cpoint + spoint)
+end
